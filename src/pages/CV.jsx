@@ -222,14 +222,14 @@ const CV = () => {
       </motion.h2>
       <div className="row cv-row" style={{ position: "relative" }}>
         {/* Colonne Expérience Professionnelle */}
-        <div className="col-md-6">
+        <div className="col-12 col-md-6">
           <h3 style={{ color: "#222222" }}>Expérience Professionnelle</h3>
           {experiences.map(exp => (
             <ExperienceCard key={exp.id} experience={exp} />
           ))}
         </div>
         {/* Colonne Formation */}
-        <div className="col-md-6">
+        <div className="col-12 col-md-6">
           <h3 style={{ color: "#222222" }}>Formation</h3>
           {formations.map(form => (
             <FormationCard key={form.id} formation={form} />
