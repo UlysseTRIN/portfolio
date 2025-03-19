@@ -13,9 +13,8 @@ const Contact = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      // Remplacez "/api/send-email" par l'URL de votre fonction serverless.
-      // Par exemple, avec Netlify, l'endpoint est généralement : /.netlify/functions/send-email
-      const response = await fetch('/.netlify/functions/send-email', {
+      // Utilisez l'endpoint de la fonction serverless déployée sur Cloudflare Pages
+      const response = await fetch('/functions/send-email', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
