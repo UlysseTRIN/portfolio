@@ -1,12 +1,28 @@
 // functions/send-email.js
 
+// Handler pour la requête OPTIONS (préflight CORS)
+export async function onRequestOptions({ request }) {
+  return new Response(null, {
+    status: 204,
+    headers: {
+      "Access-Control-Allow-Origin": "*", // Vous pouvez restreindre l'origine si nécessaire
+      "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type"
+    }
+  });
+}
+
+// Handler pour la requête POST
 export async function onRequestPost({ request, env }) {
   try {
     const { nom, email, message } = await request.json();
 
     // Vérification de la validité des champs
     if (!nom || !email || !message) {
-      return new Response(JSON.stringify({ error: "Champs manquants" }), { status: 400 });
+      return new Response(JSON.stringify({ error: "Champs manquants" }), {
+        status: 400,
+        headers: { "Access-Control-Allow-Origin": "*" }
+      });
     }
 
     // Récupérer la clé SendGrid depuis les variables d'environnement
@@ -16,7 +32,7 @@ export async function onRequestPost({ request, env }) {
     const body = {
       personalizations: [
         {
-          to: [{ email: "votre_email@exemple.com" }], // Remplacez par votre adresse mail de réception
+          to: [{ email: "ulysse.trin@hotmail.fr" }], // Remplacez par votre adresse mail de réception
           subject: "Nouveau message de votre site"
         }
       ],
@@ -40,12 +56,21 @@ export async function onRequestPost({ request, env }) {
     });
 
     if (sendgridResponse.ok) {
-      return new Response(JSON.stringify({ success: true }), { status: 200 });
+      return new Response(JSON.stringify({ success: true }), {
+        status: 200,
+        headers: { "Access-Control-Allow-Origin": "*" }
+      });
     } else {
       const errorText = await sendgridResponse.text();
-      return new Response(JSON.stringify({ error: errorText }), { status: 500 });
+      return new Response(JSON.stringify({ error: errorText }), {
+        status: 500,
+        headers: { "Access-Control-Allow-Origin": "*" }
+      });
     }
   } catch (error) {
-    return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { "Access-Control-Allow-Origin": "*" }
+    });
   }
 }
