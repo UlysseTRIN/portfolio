@@ -15,7 +15,7 @@ const Contact = () => {
     try {
       // Remplacez "/api/send-email" par l'URL de votre fonction serverless.
       // Par exemple, avec Netlify, l'endpoint est généralement : /.netlify/functions/send-email
-      const response = await fetch('/functions/send-email', {
+      const response = await fetch('/send-email', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
