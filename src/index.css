@@ -181,3 +181,9 @@ footer a:hover {
   width: 1px;
   background-color: #eaeaea;
 }
+@media (max-width: 768px) {
+  /* Make the navbar take its place in the document flow on mobile */
+  .navbar.fixed-top {
+    position: relative;
+  }
+}
