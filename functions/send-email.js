@@ -11,6 +11,17 @@ export async function onRequestPost({ request, env }) {
 
     const SENDGRID_API_KEY = env.SENDGRID_API_KEY;
 
+    // Composez le contenu de l'email avec toutes les informations
+    const emailContent = `
+      Vous avez reçu un nouveau message depuis votre site :
+
+      Nom : ${nom}
+      Email : ${email}
+
+      Message :
+      ${message}
+    `;
+
     const body = {
       personalizations: [
         {
@@ -18,11 +29,14 @@ export async function onRequestPost({ request, env }) {
           subject: "Nouveau message de votre site"
         }
       ],
-      from: { email, name: nom },
+      // Adresse d'envoi fixe et vérifiée (votre adresse no-reply)
+      from: { email: "no-reply@colombani.ai", name: "Colombani.ai" },
+      // Le champ reply_to permettra de répondre directement à l'expéditeur
+      reply_to: { email: email, name: nom },
       content: [
         {
           type: "text/plain",
-          value: message
+          value: emailContent
         }
       ]
     };
